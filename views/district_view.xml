@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <!--District -->
+        <record id="view_country_district_tree" model="ir.ui.view">
+            <field name="name">res.country.district.tree</field>
+            <field name="model">res.country.district</field>
+            <field name="arch" type="xml">
+                <tree string="District">
+                    <field name="district_id"/>
+                    <field name="code_district_id"/>
+                    <field name="state_ids"/>
+                    <field name="country_ids" options='{"no_open": True}'/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_country_district_form" model="ir.ui.view">
+            <field name="name">res.country.district.form</field>
+            <field name="model">res.country.district</field>
+            <field name="arch" type="xml">
+                <form string="District">
+                    <sheet>
+                        <group>
+                            <field name="district_id"/>
+                            <field name="code_district_id"/>
+                            <field name="state_ids"/>
+                            <field name="country_ids"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+         <!--Inherit Form View to Modify it-->
+        <record id="view_country_district_inherit_form" model="ir.ui.view">
+            <field name="name">res.country.district.inherit.view.form</field>
+            <field name="model">res.country</field>
+            <field name="inherit_id" ref="base.view_country_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="replace">
+                    <form>
+                        <sheet>
+                            <field name="image" widget="image" class="oe_avatar"/>
+                            <group>
+                                <group>
+                                    <field name="name"/>
+                                    <field name="currency_id"/>
+                                    <field name="code"/>
+                                </group>
+
+                                <group>
+                                    <field name="address_format" groups="base.group_no_one" placeholder="Address format..."/>
+                                    <field name="phone_code"/>
+                                </group>
+                            </group>
+
+                            <notebook>
+                                <page string="State">
+                                    <field name="state_ids">
+                                        <tree editable="bottom">
+                                            <field name="name"/>
+                                            <field name="code"/>
+                                        </tree>
+                                    </field>
+                                </page>
+
+                                <page string="District">
+                                    <field name="district_ids">
+                                        <tree editable="bottom">
+                                            <field name="district_id"/>
+                                            <field name="code_district_id"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+
+                        </sheet>
+                    </form>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="action_country_district" model="ir.actions.act_window">
+            <field name="name">District</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.country.district</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+              </p><p>
+                <!-- More details about what a user can do with this object will be OK -->
+              </p>
+            </field>
+        </record>
+
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="menu_district_view" name="District" parent="sales_team.menu_localisation" action="action_country_district"/>
+        <!--<menuitem action="base.action_country_state" id="menu_country_state_partner" parent="menu_localisation" sequence="2" groups="base.group_no_one"/>-->
+
+        <!--<template id="report_header_custom" inherit_id="website_sale.address">-->
+            <!--<xpath expr="//div[@class='header']" position="replace">-->
+                <!--<div class ="header">-->
+                    <!--Your Code-->
+                <!--</div>-->
+            <!--</xpath>-->
+        <!--</template>-->
+
+    </data>
+</odoo>
